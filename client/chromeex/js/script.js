@@ -71,14 +71,14 @@ var onQuery = function(){
 		var $this = $(this);
 
 		var url = $this.attr('data-href');
+		var title = $this.text();
 
 		$.ajax({
 				type: "POST",
 				url: "//localhost:9444/dest",
-				data: JSON.stringify({'query': $form.val(), 'twitterid': localStorage.getItem(twitteridKey), 'url': url}),
+				data: JSON.stringify({'query': $form.val(), 'twitterid': localStorage.getItem(twitteridKey), 'url': url, 'title': title}),
 				dataType: 'json',
 				success: function(){
-
 				}
 			});
 	});
