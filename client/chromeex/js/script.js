@@ -18,7 +18,7 @@ $(function(){
 		
 		$.ajax({
    			type: "GET",
-   			url: "https://localhost/index.php",
+   			url: "http://localhost:8080/query",
    			data: 'query=' + $form.val() + '&user_id=2',
    			success: function(msg){
      			

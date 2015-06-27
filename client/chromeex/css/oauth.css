@@ -1,6 +1,6 @@
 @charset "utf-8";
 
-.passport_wrapper{
+#passport-container{
 	position: fixed;
 	right: 0;
 	bottom: 10px;
