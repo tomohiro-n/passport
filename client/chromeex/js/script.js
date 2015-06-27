@@ -19,9 +19,9 @@ $(function(){
 		$.ajax({
    			type: "GET",
    			url: "https://localhost/index.php",
-   			data: 'query=' + $form.val(),
+   			data: 'query=' + $form.val() + '&user_id=2',
    			success: function(msg){
-     			alert(msg);
+     			
    			}
  		});
 		
@@ -31,6 +31,15 @@ $(function(){
 	$('div.srg li.g div.rc h3.r a').click(function(e){
 		var $this = $(this);
 		
-		var url = $this.attr('data-href'); 		
+		var url = $this.attr('data-href');
+		
+		$.ajax({
+   			type: "GET",
+   			url: "https://localhost/url.php",
+   			data: 'url=' + url,
+   			success: function(msg){
+     			alert(msg);
+   			}
+ 		});
 	});
 });
