@@ -6,22 +6,15 @@ var onQuery = function(){
 	$.get(chrome.extension.getURL('oauth.html'), function(data){
 
 		function appendUser(object){
-			var name;
-			var img;
-			var url;
 			OAuth.popup('twitter', {cache: true}).then(function(result) {
 				return result.get('/1.1/users/show.json?id=' + object.twitterids[0]);
 			}).then(function(data){
-				name = data.screen_name;
-				img = data.profile_image_url;
-				url = data.url;
+				var name = data.screen_name;
+				var img = data.profile_image_url;
+				var url = data.url;
+				$('a#passport-container_twitterIcon').attr('href',url).html('<img src="' + img + '" alt="" />');
+				$('.passport-container_twitterName').text(name + 'さん');
 			});
-			$('#passport-container_twitterIcon').after('\
-			<a href="' + url + '">\
-			<img src="' + img + '" alt="" /> \
-			</a>\
-			');
-			$('#passport-container_searchedName').text(name);
 		}
 
 		$appendedHtml = $(data);
