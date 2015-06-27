@@ -2,7 +2,7 @@ OAuth.initialize('LpvB_HDMk5DoD1biSEDhrrDwD00')
 var onQuery = function(){
 	var $form = $('#lst-ib');
 	var $appendedHtml;
-	var twitter_user_id = localStorage.getItem('twitter_user_id');
+	var twitteridKey = 'user_id';
 
 	$.get(chrome.extension.getURL('oauth.html'), function(data){
 
@@ -38,21 +38,19 @@ var onQuery = function(){
 
 		$('#passport-container .passport-container_queryString')[0].innerHTML = $form.val() + 'を最後に検索したのは・・・'
 
-		if(twitter_user_id){
-			appendUser(twitter_user_id);
+		if(localStorage.getItem(twitteridKey)){
+			appendUser(localStorage.getItem(twitteridKey));
 		} else {
 			OAuth.popup('twitter', {cache: true}).then(function(result) {
 				return result.get('/1.1/account/verify_credentials.json');
 			}).then(function(data){
-				twitter_user_id = data.id_str;
-				appendUser(twitter_user_id);
-				localStorage.setItem('twitter_user_id', twitter_user_id);
+				appendUser(data.id_str);
+				localStorage.setItem(twitteridKey, data.id_str);
 			});
 		}
 	});
 
 	$('div.rc h3.r a').click(function(e){
-		debugger;
 		var $this = $(this);
 
 		var url = $this.attr('data-href');
@@ -60,7 +58,7 @@ var onQuery = function(){
 		$.ajax({
 				type: "POST",
 				url: "//localhost:9444/dest",
-				data: JSON.stringify({'query': $form.val(), 'twitterid': twitter_user_id, 'url': url}),
+				data: JSON.stringify({'query': $form.val(), 'twitterid': localStorage.getItem(twitteridKey), 'url': url}),
 				dataType: 'json',
 				success: function(){
 
