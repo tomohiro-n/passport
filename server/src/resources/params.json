@@ -1,6 +1,9 @@
 {
   "database": {
-    "host": "localhost",
+    "host": "ds053312.mongolab.com",
+    "port": "53312",
+    "user": "root",
+    "password": "test",
     "databaseName": "passport"
   }
 }
