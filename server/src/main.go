@@ -65,10 +65,29 @@ func main() {
 	server.LoadConfig()
 	server.ConnectDatabase()
 	queries = server.Database.C(server.QUERIES_COLLECTION)
+	queryIndex := mgo.Index{
+		Key:        []string{"query"},
+		Unique:     false,
+		DropDups:   false,
+		Background: true,
+		Sparse:     true,
+	}
+	queryTwitterIdIndex := mgo.Index{
+		Key:        []string{"twitterid", "query"},
+		Unique:     true,
+		DropDups:   true,
+		Background: true,
+		Sparse:     true,
+	}
+	var err error
+	for _, v := range []mgo.Index{queryIndex, queryTwitterIdIndex} {
+		err = queries.EnsureIndex(v)
+	}
+
 	http.HandleFunc("/query", queryHandler)
 	http.HandleFunc("/dest", destHandler)
 	//http.ListenAndServe(":8080", nil)
-	err := http.ListenAndServeTLS(":9444", "./public_key", "private_key", nil)
+	err = http.ListenAndServeTLS(":9444", "./public_key", "private_key", nil)
 	if err != nil {
 		fmt.Println(err)
 	}
