@@ -5,15 +5,23 @@ var onQuery = function(){
 
 	$.get(chrome.extension.getURL('oauth.html'), function(data){
 
-		function appendUser(object){
-			OAuth.popup('twitter', {cache: true}).then(function(result) {
-				return result.get('/1.1/users/show.json?id=' + object.items[0].twitterid);
-			}).then(function(data){
-				var name = data.screen_name;
-				var img = data.profile_image_url;
-				var url = data.url;
-				$('a#passport-container_twitterIcon').attr('href',url).html('<img src="' + img + '" alt="" />');
-				$('.passport-container_twitterName').text(name + 'さん');
+		function appendUser(twitterid){
+			$.ajax({
+				type: "POST",
+				url: "//localhost:9444/query",
+				data: JSON.stringify({'query': $form.val(), 'twitterid': twitterid}),
+				dataType: 'json',
+				success: function(object){
+					OAuth.popup('twitter', {cache: true}).then(function(result) {
+						return result.get('/1.1/users/show.json?id=' + object.items[0].twitterid);
+					}).then(function(data){
+						var name = data.screen_name;
+						var img = data.profile_image_url;
+						var url = data.url;
+						$('a#passport-container_twitterIcon').attr('href',url).html('<img src="' + img + '" alt="" />');
+						$('.passport-container_twitterName').text(name + 'さん');
+					});
+				}
 			});
 		}
 
@@ -32,18 +40,18 @@ var onQuery = function(){
 
 		$('body').after($appendedHtml);
 
-		OAuth.popup('twitter', {cache: true}).then(function(result) {
-			return result.get('/1.1/account/verify_credentials.json');
-		}).then(function(data){
-			var twitterid = data.id_str;
-			$.ajax({
-				type: "POST",
-				url: "//localhost:9444/query",
-				data: JSON.stringify({'query': $form.val(), 'twitterid': twitterid}),
-				dataType: 'json',
-				success: appendUser
+		var twitterid = localStorage.getItem('twitterid');
+		if(twitterid){
+			appendUser(twitterid);
+		} else {
+			OAuth.popup('twitter', {cache: true}).then(function(result) {
+				return result.get('/1.1/account/verify_credentials.json');
+			}).then(function(data){
+				twitterid = data.id_str;
+				appendUser(twitterid);
+				localStorage.setItem('twitterid', twitterid);
 			});
-		});
+		}
 	});
 
 	$('div.srg li.g div.rc h3.r a').click(function(e){
