@@ -40,5 +40,9 @@ func main() {
 	server.ConnectDatabase()
 	queries = server.Database.C(server.QUERIES_COLLECTION)
 	http.HandleFunc("/query", queryHandler)
-	http.ListenAndServe(":8080", nil)
+	//http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServeTLS(":9444", "./public_key", "private_key", nil)
+	if err != nil {
+		fmt.Println(err)
+	}
 }
