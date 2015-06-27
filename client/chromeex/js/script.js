@@ -7,7 +7,7 @@ var onQuery = function(){
 
 		function appendUser(object){
 			OAuth.popup('twitter', {cache: true}).then(function(result) {
-				return result.get('/1.1/users/show.json?id=' + object.twitterids[0]);
+				return result.get('/1.1/users/show.json?id=' + object.items[0].twitterid);
 			}).then(function(data){
 				var name = data.screen_name;
 				var img = data.profile_image_url;
