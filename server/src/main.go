@@ -27,6 +27,7 @@ type DestRequestStruct struct {
 	TwitterId string
 	Query string
 	Url string
+	Title string
 }
 
 var queries *mgo.Collection
