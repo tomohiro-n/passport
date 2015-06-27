@@ -1,13 +1,88 @@
 @charset "utf-8";
 
-#passport-container{
-	position: fixed;
-	right: 0;
-	bottom: 10px;
-	width: 300px;
-	height: 300px;
-	border: 1px solid #efefef;
-	background-color: #fff;
-	z-index: 9999;
+li{
+	list-style: none;
 }
 
+#passport-container{
+	padding: 0 10px 10px;
+	position: fixed;
+	right: 30px;
+	bottom: 30px;
+	width: 300px;	
+	border: 1px solid #efefef;
+	background-color: #efefef;
+	border-radius: 10px 10px 10px 10px;
+	z-index: 9999;
+	overflow: auto;
+}
+
+.passport-container_twitterPicture img{
+	max-width: 100px;
+	height: auto;
+	border-radius: 200px;
+    -webkit-border-radius: 200px;
+    -moz-border-radius: 200px;
+}
+
+.passport_clearfix:after{
+	content: "";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	height: 0;
+}
+
+.passport-container_searchedLeft{
+	float: left;
+}
+
+.passport-container_serchedRight{
+	padding-top: 10px;
+	float: right;
+}
+
+.passport-container_queryString{	
+	width: 180px;	
+}
+
+#passport-container div.name{
+	display: none;
+}
+
+.passport-container_clickedSite{
+	padding: 10px;
+	background: #fcfcfc;
+	border-radius: 10px 10px 10px 10px;
+}
+
+.passport-container_clickedSite_numberOfLike{
+	padding: 2px 2px 2px 5px;
+	color: #fff;
+	background: #6495ED;
+	border-radius: 10px 10px 10px 10px;
+	width: 100px;
+}
+
+.passport-container_clickedSite_numberOfLike img{
+	width: 20px;
+	height: auto;
+}
+
+.passport-container_clickedSiteThumb img{
+	width: 70px;
+	height: auto;
+}
+
+.passport-container_clickedSiteLeft{
+	float: left;
+}
+
+.passport-container_clickedSiteRight{
+	float: right;
+}
+
+.passport-container_clickedSiteThumb{
+	padding-top: 10px;
+	margin-left: 10px;
+}
