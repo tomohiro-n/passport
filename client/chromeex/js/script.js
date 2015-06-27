@@ -19,7 +19,7 @@ $(function(){
 		$.ajax({
    			type: "GET",
    			url: "https://localhost/index.php",
-   			data: '?query=' + $form.val(),
+   			data: 'query=' + $form.val(),
    			success: function(msg){
      			alert(msg);
    			}
