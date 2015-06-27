@@ -1,8 +1,8 @@
 OAuth.initialize('LpvB_HDMk5DoD1biSEDhrrDwD00')
 var onQuery = function(){
 	var $form = $('#lst-ib');
-	var $appendedHtml;
-	var twitter_user_id;
+	var $appendedHtml;	
+	var twitteridKey = 'user_id';
 
 	$.get(chrome.extension.getURL('oauth.html'), function(data){
 		function appendUser(object){						
@@ -33,7 +33,7 @@ var onQuery = function(){
 			return result.get('/1.1/account/verify_credentials.json');
 		}).then(function(data){			
 			var twitterid = data.id_str;
-			twitter_user_id = twitterid;
+			localStorage.setItem(twitteridKey ,twitterid);
 			
 			$.ajax({
 				type: "POST",
@@ -53,7 +53,7 @@ var onQuery = function(){
 		$.ajax({
 				type: "POST",
 				url: "//localhost:9444/dest",
-				data: JSON.stringify({'query': $form.val(), 'twitterid': twitter_user_id, 'url': url}),
+				data: JSON.stringify({'query': $form.val(), 'twitterid': localStorage.getItem(twitteridKey), 'url': url}),
 				dataType: 'json',
 				success: function(){
 					
