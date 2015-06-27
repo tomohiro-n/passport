@@ -19,7 +19,7 @@ $(function(){
 		$.ajax({
    			type: "POST",
    			url: "//localhost:9444/query",
-   			data: 'query=' + $form.val() + '&user_id=dummy',
+   			data: JSON.stringify({'query': $form.val(), 'twitterid': 'dummy'}),
 				dataType: 'json',
    			success: function(object){
 					$('div#passport-container').html('\

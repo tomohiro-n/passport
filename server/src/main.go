@@ -32,6 +32,7 @@ func queryHandler(w http.ResponseWriter, r *http.Request) {
 	queries.Insert(body)
 
 	dummyResponse := queryResponseStruct{[]string{"a", "b", "c", "d"}}
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	json.NewEncoder(w).Encode(dummyResponse)
 }
 
