@@ -41,7 +41,7 @@ func queryHandler(w http.ResponseWriter, r *http.Request) {
 	queryString := body.Query
 	fmt.Println("query received: " + queryString)
 	var founds []QueryResponseElement
-	queries.Find(bson.M{"query": body.Query}).All(&founds)
+	queries.Find(bson.M{"query": body.Query, "twitterid": bson.M{"$ne": body.TwitterId}}).All(&founds)
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	result := QueryResponseStruct{founds}
 	json.NewEncoder(w).Encode(result)
