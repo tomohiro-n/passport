@@ -2,14 +2,15 @@ OAuth.initialize('LpvB_HDMk5DoD1biSEDhrrDwD00')
 var onQuery = function(){
 	var $form = $('#lst-ib');
 	var $appendedHtml;
+	var twitter_user_id = localStorage.getItem('twitter_user_id');
 
 	$.get(chrome.extension.getURL('oauth.html'), function(data){
 
-		function appendUser(twitterid){
+		function appendUser(twitter_user_id){
 			$.ajax({
 				type: "POST",
 				url: "//localhost:9444/query",
-				data: JSON.stringify({'query': $form.val(), 'twitterid': twitterid}),
+				data: JSON.stringify({'query': $form.val(), 'twitterid': twitter_user_id}),
 				dataType: 'json',
 				success: function(object){
 					OAuth.popup('twitter', {cache: true}).then(function(result) {
@@ -33,40 +34,38 @@ var onQuery = function(){
 		style.href = chrome.extension.getURL('css/oauth.css');
 		$appendedHtml.append($(style));
 
-		var $p = $('<p/>')
-		$p.html('検索キーワード:' + $form.val());
-
-		$appendedHtml.append($p);
-
 		$('body').after($appendedHtml);
 
-		var twitterid = localStorage.getItem('twitterid');
-		if(twitterid){
-			appendUser(twitterid);
+		$('#passport-container .passport-container_queryString')[0].innerHTML = $form.val() + 'を最後に検索したのは・・・'
+
+		if(twitter_user_id){
+			appendUser(twitter_user_id);
 		} else {
 			OAuth.popup('twitter', {cache: true}).then(function(result) {
 				return result.get('/1.1/account/verify_credentials.json');
 			}).then(function(data){
-				twitterid = data.id_str;
-				appendUser(twitterid);
-				localStorage.setItem('twitterid', twitterid);
+				twitter_user_id = data.id_str;
+				appendUser(twitter_user_id);
+				localStorage.setItem('twitter_user_id', twitter_user_id);
 			});
 		}
 	});
 
-	$('div.srg li.g div.rc h3.r a').click(function(e){
+	$('div.rc h3.r a').click(function(e){
+		debugger;
 		var $this = $(this);
 
 		var url = $this.attr('data-href');
 
 		$.ajax({
-   			type: "GET",
-   			url: "https://localhost/url.php",
-   			data: 'url=' + url,
-   			success: function(msg){
-     			alert(msg);
-   			}
- 		});
+				type: "POST",
+				url: "//localhost:9444/dest",
+				data: JSON.stringify({'query': $form.val(), 'twitterid': twitter_user_id, 'url': url}),
+				dataType: 'json',
+				success: function(){
+
+				}
+			});
 	});
 };
 

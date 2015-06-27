@@ -17,7 +17,6 @@ p{
 	height: 100px;
 	border: 1px solid #efefef;
 	background-color: #efefef;
-	border-radius: 10px 10px 10px 10px;
 	z-index: 9999;
 	overflow: auto;
 }
@@ -67,7 +66,6 @@ p{
 	padding: 5px;
 	width: 290px;
 	background: #fff;
-	border-radius: 10px 10px 10px 10px;	
 }
 
 .passport-container_clickedSiteTitle{
