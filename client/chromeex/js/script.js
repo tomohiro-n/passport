@@ -1,3 +1,4 @@
+OAuth.initialize('LpvB_HDMk5DoD1biSEDhrrDwD00')
 var onQuery = function(){
 	var $form = $('#lst-ib');
 	var $appendedHtml;
@@ -7,18 +8,20 @@ var onQuery = function(){
 		function appendUser(object){
 			var name;
 			var img;
-			OAuth.initialize('LpvB_HDMk5DoD1biSEDhrrDwD00')
-			OAuth.popup('twitter', {cache: true}).done(function(result) {
-				return result.get('/1.1/users/show.json?screen_name=' + object.twitterids[0]);
+			var url;
+			OAuth.popup('twitter', {cache: true}).then(function(result) {
+				return result.get('/1.1/users/show.json?id=' + object.twitterids[0]);
 			}).then(function(data){
-				console.log(data);
 				name = data.screen_name;
 				img = data.profile_image_url;
+				url = data.url;
 			});
-			$('div#passport-container p').after('\
+			$('#passport-container_twitterIcon').after('\
+			<a href="' + url + '">\
 			<img src="' + img + '" alt="" /> \
-			<div class="name">' + name + '</div> \
+			</a>\
 			');
+			$('#passport-container_searchedName').text(name);
 		}
 
 		$appendedHtml = $(data);
@@ -36,13 +39,18 @@ var onQuery = function(){
 
 		$('body').after($appendedHtml);
 
-		$.ajax({
-   			type: "POST",
-   			url: "//localhost:9444/query",
-   			data: JSON.stringify({'query': $form.val(), 'twitterid': 'dummy'}),
+		OAuth.popup('twitter', {cache: true}).then(function(result) {
+			return result.get('/1.1/account/verify_credentials.json');
+		}).then(function(data){
+			var twitterid = data.id_str;
+			$.ajax({
+				type: "POST",
+				url: "//localhost:9444/query",
+				data: JSON.stringify({'query': $form.val(), 'twitterid': twitterid}),
 				dataType: 'json',
-   			success: appendUser
- 		});
+				success: appendUser
+			});
+		});
 	});
 
 	$('div.srg li.g div.rc h3.r a').click(function(e){
