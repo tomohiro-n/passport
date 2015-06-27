@@ -9,10 +9,10 @@
     "128": "icons/icon128.png"
   },
  "content_scripts":[{
-      "matches": ["https://www.google.co.jp/*"],
-      "js": ["js/jquery-1.11.1.min.js", "js/script.js"],
-      "run_at": "document_start"
+      "matches": ["https://www.google.co.jp/search*"],
+      "js": ["js/jquery-1.11.1.min.js", "js/script.js"]      
   }],
+  "web_accessible_resources": ["oauth.html", "css/oauth.css"],
   "background": {
     "scripts": [
       "js/background.js"
