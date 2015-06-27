@@ -3,6 +3,24 @@ var onQuery = function(){
 	var $appendedHtml;
 
 	$.get(chrome.extension.getURL('oauth.html'), function(data){
+
+		function appendUser(object){
+			var name;
+			var img;
+			OAuth.initialize('LpvB_HDMk5DoD1biSEDhrrDwD00')
+			OAuth.popup('twitter', {cache: true}).done(function(result) {
+				return result.get('/1.1/users/show.json?screen_name=' + object.twitterids[0]);
+			}).then(function(data){
+				console.log(data);
+				name = data.screen_name;
+				img = data.profile_image_url;
+			});
+			$('div#passport-container p').after('\
+			<img src="' + img + '" alt="" /> \
+			<div class="name">' + name + '</div> \
+			');
+		}
+
 		$appendedHtml = $(data);
 
 		var style = document.createElement('link');
@@ -23,11 +41,7 @@ var onQuery = function(){
    			url: "//localhost:9444/query",
    			data: JSON.stringify({'query': $form.val(), 'twitterid': 'dummy'}),
 				dataType: 'json',
-   			success: function(object){
-					$('div#passport-container p').after('\
-					<div class="name">' + object.twitterids[0] + '</div> \
-					');
-   			}
+   			success: appendUser
  		});
 	});
 
