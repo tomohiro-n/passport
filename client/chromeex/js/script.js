@@ -53,7 +53,7 @@ var onQuery = function(){
 
 		$('body').after($appendedHtml);
 
-		$('#passport-container .passport-container_queryString')[0].innerHTML = $form.val() + 'を最後に検索したのは・・・'
+		$('#passport-container .passport-container_queryString')[0].innerHTML = $form.val() + 'を過去に検索したのは・・・'
 
 		if(localStorage.getItem(twitteridKey)){
 			appendUser(localStorage.getItem(twitteridKey));
