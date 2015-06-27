@@ -16,20 +16,19 @@ $(function(){
 
 		$appendedHtml.append($p);
 
+		$('body').after($appendedHtml);
+
 		$.ajax({
    			type: "POST",
    			url: "//localhost:9444/query",
    			data: JSON.stringify({'query': $form.val(), 'twitterid': 'dummy'}),
 				dataType: 'json',
    			success: function(object){
-					$('div#passport-container').html('\
-					<img src="https://pbs.twimg.com/profile_images/1492534374/2011071417470001_400x400.jpg" alt="" />\
-					<div class="name">' + object.twitterids[0].user_id + '</div> \
+					$('div#passport-container p').after('\
+					<div class="name">' + object.twitterids[0] + '</div> \
 					');
    			}
  		});
-
-		$('body').after($appendedHtml);
 	});
 
 	$('div.srg li.g div.rc h3.r a').click(function(e){
