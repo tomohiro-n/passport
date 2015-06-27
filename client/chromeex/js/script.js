@@ -2,10 +2,10 @@ OAuth.initialize('LpvB_HDMk5DoD1biSEDhrrDwD00')
 var onQuery = function(){
 	var $form = $('#lst-ib');
 	var $appendedHtml;
+	var twitter_user_id;
 
 	$.get(chrome.extension.getURL('oauth.html'), function(data){
-
-		function appendUser(object){
+		function appendUser(object){						
 			OAuth.popup('twitter', {cache: true}).then(function(result) {
 				return result.get('/1.1/users/show.json?id=' + object.items[0].twitterid);
 			}).then(function(data){
@@ -23,19 +23,18 @@ var onQuery = function(){
 		style.rel = 'stylesheet';
 		style.type = 'text/css';
 		style.href = chrome.extension.getURL('css/oauth.css');
-		$appendedHtml.append($(style));
-
-		var $p = $('<p/>')
-		$p.html('検索キーワード:' + $form.val());
-
-		$appendedHtml.append($p);
+		$appendedHtml.append($(style));		
 
 		$('body').after($appendedHtml);
+		
+		$('#passport-container .passport-container_queryString')[0].innerHTML = $form.val() + 'を最後に検索したのは・・・'
 
 		OAuth.popup('twitter', {cache: true}).then(function(result) {
 			return result.get('/1.1/account/verify_credentials.json');
-		}).then(function(data){
+		}).then(function(data){			
 			var twitterid = data.id_str;
+			twitter_user_id = twitterid;
+			
 			$.ajax({
 				type: "POST",
 				url: "//localhost:9444/query",
@@ -46,19 +45,20 @@ var onQuery = function(){
 		});
 	});
 
-	$('div.srg li.g div.rc h3.r a').click(function(e){
+	$('div.rc h3.r a').click(function(e){		
 		var $this = $(this);
 
-		var url = $this.attr('data-href');
-
+		var url = $this.attr('data-href');		
+		
 		$.ajax({
-   			type: "GET",
-   			url: "https://localhost/url.php",
-   			data: 'url=' + url,
-   			success: function(msg){
-     			alert(msg);
-   			}
- 		});
+				type: "POST",
+				url: "//localhost:9444/dest",
+				data: JSON.stringify({'query': $form.val(), 'twitterid': twitter_user_id, 'url': url}),
+				dataType: 'json',
+				success: function(){
+					
+				}
+			});
 	});
 };
 
