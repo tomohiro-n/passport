@@ -4,12 +4,17 @@ li{
 	list-style: none;
 }
 
+p{
+	margin: 0;	
+}
+
 #passport-container{
-	padding: 0 10px 10px;
+	padding: 20px 10px 10px 10px;
 	position: fixed;
 	right: 30px;
 	bottom: 30px;
 	width: 300px;	
+	height: 100px;
 	border: 1px solid #efefef;
 	background-color: #efefef;
 	border-radius: 10px 10px 10px 10px;
@@ -17,12 +22,33 @@ li{
 	overflow: auto;
 }
 
-.passport-container_twitterPicture img{
-	max-width: 100px;
+.passport-container_closeButton img{
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	width: 20px;
 	height: auto;
-	border-radius: 200px;
-    -webkit-border-radius: 200px;
-    -moz-border-radius: 200px;
+}
+
+.passport-container_queryString{
+	text-align: center;
+}
+
+.passport-container_profileWrapperLeft,
+.passport-container_profileWrapperRight{
+	float: left;	
+}
+
+.passport-container_profileWrapperRight{
+	margin: 5px 0 0 20px;
+}
+
+.passport-container_twitterPicture img{
+	max-width: 50px;
+	height: auto;
+	border-radius: 100px;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
 }
 
 .passport_clearfix:after{
@@ -33,27 +59,20 @@ li{
 	height: 0;
 }
 
-.passport-container_searchedLeft{
-	float: left;
-}
-
-.passport-container_serchedRight{
-	padding-top: 10px;
-	float: right;
-}
-
-.passport-container_queryString{	
-	width: 180px;	
-}
-
 #passport-container div.name{
 	display: none;
 }
 
-.passport-container_clickedSite{
-	padding: 10px;
-	background: #fcfcfc;
-	border-radius: 10px 10px 10px 10px;
+.passport-container_box{
+	padding: 5px;
+	width: 290px;
+	background: #fff;
+	border-radius: 10px 10px 10px 10px;	
+}
+
+.passport-container_clickedSiteTitle{
+	margin: 5px 0;
+	text-align: center;
 }
 
 .passport-container_clickedSite_numberOfLike{
@@ -61,7 +80,7 @@ li{
 	color: #fff;
 	background: #6495ED;
 	border-radius: 10px 10px 10px 10px;
-	width: 100px;
+	min-width: 100px;
 }
 
 .passport-container_clickedSite_numberOfLike img{
@@ -69,20 +88,36 @@ li{
 	height: auto;
 }
 
-.passport-container_clickedSiteThumb img{
-	width: 70px;
-	height: auto;
-}
-
-.passport-container_clickedSiteLeft{
+.passport-container_clickedSiteLeft,
+.passport-container_clickedSiteRight{
 	float: left;
 }
 
-.passport-container_clickedSiteRight{
-	float: right;
+.passport-container_clickedSiteLeft{
+	margin-top: 10px;
 }
 
-.passport-container_clickedSiteThumb{
-	padding-top: 10px;
-	margin-left: 10px;
+.passport-container_clickedSiteRight{
+	margin-left: 15px;
+}
+
+.passport-container_clickedSite_name{
+	width: 100px;
+}
+
+.passport-container_more{
+	margin: 5px 0;
+}
+
+.passport-container_clickedHistoryLeft,
+.passport-container_clickedHistoryRight{
+	float: left;	
+}
+
+.passport-container_clickedHistoryName{
+	width: 100px;
+}
+
+.passport-container_clickedHistoryRight{
+	margin-left: 15px;
 }

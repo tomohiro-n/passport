@@ -10,8 +10,11 @@
   },
  "content_scripts":[{
       "matches": ["https://www.google.co.jp/search*"],
-      "js": ["js/jquery-1.11.1.min.js", "js/script.js"]      
+      "js": ["js/bower_components/oauth.io/dist/oauth.js", "js/jquery-1.11.1.min.js", "js/script.js"]
   }],
+  "externally_connectable": {
+    "matches": ["https://google.co.jp/*", "https://oauth.io/*"]
+  },
   "web_accessible_resources": ["oauth.html", "css/oauth.css"],
   "background": {
     "scripts": [
@@ -19,7 +22,11 @@
     ]
   },
   "options_ui": {
-  "page": "options.html",
-  "chrome_style": true
-  }
+    "page": "options.html",
+    "chrome_style": true
+  },
+  "permissions": [
+    "http://*/*",
+    "https://*/*"
+  ]
 }
