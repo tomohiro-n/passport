@@ -1,4 +1,4 @@
-$(function(){
+var onQuery = function(){
 	var $form = $('#lst-ib');
 	var $appendedHtml;
 
@@ -45,4 +45,8 @@ $(function(){
    			}
  		});
 	});
-});
+};
+
+$(onQuery);
+
+$("#lst-ib").change(onQuery);
