@@ -19,7 +19,7 @@ var onQuery = function(){
 					}
 					// first
 					OAuth.popup('twitter', {cache: true}).then(function(result) {
-						return result.get('/1.1/users/show.json?id=' + object.items[0].twitterid);
+						return result.get('/1.1/users/show.json?screen_name=' + object.items[0].twitterid);
 					}).then(function(data){
 						var name = data.screen_name;
 						var img = data.profile_image_url;
@@ -61,8 +61,8 @@ var onQuery = function(){
 			OAuth.popup('twitter', {cache: true}).then(function(result) {
 				return result.get('/1.1/account/verify_credentials.json');
 			}).then(function(data){
-				appendUser(data.id_str);
-				localStorage.setItem(twitteridKey, data.id_str);
+				appendUser(data.screen_name);
+				localStorage.setItem(twitteridKey, data.screen_name);
 			});
 		}
 	});
