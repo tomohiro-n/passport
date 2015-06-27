@@ -13,6 +13,11 @@ var onQuery = function(){
 				data: JSON.stringify({'query': $form.val(), 'twitterid': twitter_user_id}),
 				dataType: 'json',
 				success: function(object){
+					// zero
+					if(object.items.length < 1){
+						return;
+					}
+					// first
 					OAuth.popup('twitter', {cache: true}).then(function(result) {
 						return result.get('/1.1/users/show.json?id=' + object.items[0].twitterid);
 					}).then(function(data){
@@ -21,6 +26,18 @@ var onQuery = function(){
 						var url = data.url;
 						$('a#passport-container_twitterIcon').attr('href',url).html('<img src="' + img + '" alt="" />');
 						$('.passport-container_twitterName').text(name + 'さん');
+					});
+
+					if(object.items.length == 1){
+						return;
+					}
+					// other
+					$.get(chrome.extension.getURL('more.html'), function(data){
+						var $moreHtml = $(data);
+						for(var i = 1; i < object.items.length; i++){
+							$moreHtml.find('.passport-container_more').text('さらに' + i + 'で検索しました');
+							$('#passport-container').append($moreHtml.html());
+						}
 					});
 				}
 			});
