@@ -21,7 +21,7 @@ type QueryResponseStruct struct {
 type QueryResponseElement struct {
 	TwitterId string `json:"twitterid"`
 	Url string `json:"url"`
-	Title string `json:"url"`
+	Title string `json:"title"`
 }
 
 type DestRequestStruct struct {
