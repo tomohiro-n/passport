@@ -14,7 +14,7 @@ var onQuery = function(){
 				dataType: 'json',
 				success: function(object){
 					// zero
-					if(object.items.length < 1){
+					if(object.items == null){
 						return;
 					}
 					// first
