@@ -13,8 +13,8 @@ p{
 	position: fixed;
 	right: 30px;
 	bottom: 30px;
-	width: 300px;	
-	height: 100px;
+	width: 300px;
+	height: 120px;
 	border: 1px solid #efefef;
 	background-color: #efefef;
 	z-index: 9999;
@@ -118,4 +118,9 @@ p{
 
 .passport-container_clickedHistoryRight{
 	margin-left: 15px;
+}
+
+#passport-container.passport-container_collapse{
+	height: inherit;
+	max-height: 80%;
 }
