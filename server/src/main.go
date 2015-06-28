@@ -22,7 +22,8 @@ type QueryResponseElement struct {
 	TwitterId string `json:"twitterid"`
 	Url string `json:"url"`
 	Title string `json:"title"`
-	OtherQueries []string `json:"otherqueries"`
+	Query string `json:"query"`
+	OtherQueries []QueryResponseElement `json:"otherqueries"`
 }
 
 type DestRequestStruct struct {
@@ -41,16 +42,12 @@ func queryHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		panic(err)
 	}
-	queryString := body.Query
-	fmt.Println("query received: " + queryString)
 	var founds []QueryResponseElement
 	queries.Find(bson.M{"query": body.Query, "twitterid": bson.M{"$ne": body.TwitterId}}).Limit(5).All(&founds)
 	for i, _ := range founds {
-		var tmp []map[string]string
+		var tmp []QueryResponseElement
 		queries.Find(bson.M{"twitterid": founds[i].TwitterId}).Limit(5).All(&tmp)
-		for _, t := range tmp {
-			founds[i].OtherQueries = append(founds[i].OtherQueries, t["query"])
-		}
+		founds[i].OtherQueries = tmp
 	}
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	fmt.Println(founds)
