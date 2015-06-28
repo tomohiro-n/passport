@@ -43,10 +43,12 @@ var onQuery = function(){
 				return;
 			}
 			$.get(chrome.extension.getURL('more.html'), function(data){
+				$('.passport-container_moreBox').remove();
 				var $moreHtml = $(data);
-				for(var i in queryObject.items[nowUserIndex].otherqueries.length){
-					$moreHtml.find('.passport-container_more').text('さらに' + i + 'で検索しました');
-					$moreHtml.find('.passport-container_clickedHistoryName').html('<a href="' + i + '">' + i + '</a>');
+				var others = queryObject.items[nowUserIndex].otherqueries;
+				for(var i= 0; i < others.length ; i++){
+					$moreHtml.find('.passport-container_more').text('さらに' + others[i].query + 'で検索しました');
+					$moreHtml.find('.passport-container_clickedHistoryName').html('<a href="' + others[i].url + '">' + others[i].title + '</a>');
 					$('#passport-container').append($moreHtml.html());
 				}
 			});
@@ -59,12 +61,12 @@ var onQuery = function(){
 				return;
 			}
 			// first
-			appendUser(queryObject, nowUserIndex);
+			appendUser();
 
 			$('.passport-container_clickedSite_name').html('<a href="' + queryObject.items[nowUserIndex].url + '">' + queryObject.items[nowUserIndex].title + '</a>');
 
 			// other
-			appendOtherQueries(queryObject, nowUserIndex);
+			appendOtherQueries();
 
 			if(queryObject.items.length == 1){
 				return;
