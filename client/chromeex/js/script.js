@@ -27,7 +27,7 @@ var onQuery = function(){
 					}).then(function(data){
 						var name = data.screen_name;
 						var img = data.profile_image_url;
-						var url = data.url;
+						var url = data.url || 'https://twitter.com/' + name;
 						$('a#passport-container_twitterIcon').attr('href',url).html('<img src="' + img + '" alt="" />');
 						$('.passport-container_twitterName').text(name + 'さん');
 					});
@@ -42,6 +42,7 @@ var onQuery = function(){
 						var $moreHtml = $(data);
 						for(var i = 1; i < object.items.length; i++){
 							$moreHtml.find('.passport-container_more').text('さらに' + i + 'で検索しました');
+							$moreHtml.find('.passport-container_clickedHistoryName').html('<a href="' + i + '">' + i + '</a>');
 							$('#passport-container').append($moreHtml.html());
 						}
 					});
