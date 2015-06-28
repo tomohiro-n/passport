@@ -1,4 +1,7 @@
-OAuth.initialize('jWQegL3cP9K8-JuTv6KXtTzxkXg');
+OAuth.initialize('LpvB_HDMk5DoD1biSEDhrrDwD00');
+$(function(){
+	$('body').after('<div id="passport-container"></div>');
+});
 var onQuery = function(){
 	var $form = $('#lst-ib');
 	var $appendedHtml;
@@ -15,6 +18,7 @@ var onQuery = function(){
 				success: function(object){
 					// zero
 					if(object.items == null){
+						$('#passport-container').html('');
 						return;
 					}
 					// first
@@ -27,6 +31,8 @@ var onQuery = function(){
 						$('a#passport-container_twitterIcon').attr('href',url).html('<img src="' + img + '" alt="" />');
 						$('.passport-container_twitterName').text(name + 'さん');
 					});
+
+					$('.passport-container_clickedSite_name').html('<a href="' + object.items[0].url + '">' + object.items[0].title + '</a>');
 
 					if(object.items.length == 1){
 						return;
@@ -51,7 +57,7 @@ var onQuery = function(){
 		style.href = chrome.extension.getURL('css/oauth.css');
 		$appendedHtml.append($(style));
 
-		$('body').after($appendedHtml);
+		$('#passport-container').html($appendedHtml.html());
 
 		$('#passport-container .passport-container_queryString')[0].innerHTML = $form.val() + 'を過去に検索したのは・・・'
 
