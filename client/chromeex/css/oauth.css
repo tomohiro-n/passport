@@ -124,3 +124,6 @@ p{
 	height: inherit;
 	max-height: 80%;
 }
+#passport-container_changeUserButton img{
+	width: 40px;
+}

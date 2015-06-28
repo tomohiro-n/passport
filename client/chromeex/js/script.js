@@ -109,6 +109,8 @@ var onQuery = function(){
 				localStorage.setItem(twitteridKey, data.screen_name);
 			});
 		}
+
+		$('#passport-container_changeUserButton img').attr('src', chrome.extension.getURL('icons/koushin.png'));
 	});
 
 	$('div.rc h3.r a').click(function(e){

@@ -15,7 +15,7 @@
   "externally_connectable": {
     "matches": ["https://google.co.jp/*", "https://oauth.io/*"]
   },
-  "web_accessible_resources": ["oauth.html", "more.html", "css/oauth.css"],
+  "web_accessible_resources": ["oauth.html", "more.html", "css/oauth.css", "icons/koushin.png"],
   "background": {
     "scripts": [
       "js/background.js"
