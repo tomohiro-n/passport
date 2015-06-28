@@ -22,6 +22,7 @@ type QueryResponseElement struct {
 	TwitterId string `json:"twitterid"`
 	Url string `json:"url"`
 	Title string `json:"title"`
+	OtherQueries []string `json:"otherqueries"`
 }
 
 type DestRequestStruct struct {
@@ -43,8 +44,16 @@ func queryHandler(w http.ResponseWriter, r *http.Request) {
 	queryString := body.Query
 	fmt.Println("query received: " + queryString)
 	var founds []QueryResponseElement
-	queries.Find(bson.M{"query": body.Query, "twitterid": bson.M{"$ne": body.TwitterId}}).All(&founds)
+	queries.Find(bson.M{"query": body.Query, "twitterid": bson.M{"$ne": body.TwitterId}}).Limit(5).All(&founds)
+	for i, _ := range founds {
+		var tmp []map[string]string
+		queries.Find(bson.M{"twitterid": founds[i].TwitterId}).Limit(5).All(&tmp)
+		for _, t := range tmp {
+			founds[i].OtherQueries = append(founds[i].OtherQueries, t["query"])
+		}
+	}
 	w.Header().Set("Access-Control-Allow-Origin", "*")
+	fmt.Println(founds)
 	result := QueryResponseStruct{founds}
 	json.NewEncoder(w).Encode(result)
 
@@ -74,6 +83,13 @@ func main() {
 		Background: true,
 		Sparse:     true,
 	}
+	twitterIdIndex := mgo.Index {
+		Key:        []string{"twitterid"},
+		Unique:     false,
+		DropDups:   false,
+		Background: true,
+		Sparse:     true,
+	}
 	queryTwitterIdIndex := mgo.Index{
 		Key:        []string{"twitterid", "query"},
 		Unique:     true,
@@ -82,7 +98,7 @@ func main() {
 		Sparse:     true,
 	}
 	var err error
-	for _, v := range []mgo.Index{queryIndex, queryTwitterIdIndex} {
+	for _, v := range []mgo.Index{queryIndex, twitterIdIndex, queryTwitterIdIndex} {
 		err = queries.EnsureIndex(v)
 	}
 
